@@ -5,11 +5,7 @@
 #include <packets/Packet.h>
 #include <packets/BCAST.h>
 
-BCAST::BCAST(string fileName, char deletedOrAdded) : Packet((short)9)
-{
-    this->fileName = fileName;
-    this->deletedOrAdded = deletedOrAdded;
-}
+BCAST::BCAST(string fileName, char deletedOrAdded) : Packet((short)9),fileName(fileName),deletedOrAdded(deletedOrAdded){}
 
 string BCAST::getFileName() {
     this->fileName;

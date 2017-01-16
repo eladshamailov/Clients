@@ -12,11 +12,11 @@ class ERROR : public Packet
 {
 private:
     short errorCode = 0;
-    std::wstring errorMassage;
+    string errorMassage;
 public:
     ERROR(short errorCode);
 
     virtual short getErrorCode();
 
-    virtual std::wstring getErrorMessage();
+    virtual string getErrorMessage();
 };

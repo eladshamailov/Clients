@@ -5,12 +5,9 @@
 #include <packets/Packet.h>
 #include <packets/DELRQ.h>
 
-DELRQ::DELRQ(const std::wstring &name) : Packet((short)8)
-{
-    this->fileName = name;
-}
+DELRQ::DELRQ(string fileName) : Packet((short)8),fileName(fileName){}
 
-std::wstring DELRQ::getFileName()
+string DELRQ::getFileName()
 {
     return fileName;
 }

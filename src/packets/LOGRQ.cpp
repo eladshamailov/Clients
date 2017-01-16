@@ -5,12 +5,9 @@
 #include <packets/Packet.h>
 #include <packets/LOGRQ.h>
 
-LOGRQ::LOGRQ(const std::wstring &userName) : Packet((short)7)
-{
-    this->userName = userName;
-}
+LOGRQ::LOGRQ(string userName) : Packet((short)7),userName(userName){}
 
-std::wstring LOGRQ::getUserName()
+string LOGRQ::getUserName()
 {
     return userName;
 }

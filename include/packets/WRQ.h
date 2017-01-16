@@ -11,9 +11,9 @@
 class WRQ : public Packet
 {
 private:
-    std::wstring fileName;
+    string fileName;
 public:
-    virtual std::wstring getFileName();
-    WRQ(const std::wstring &name);
+    virtual string getFileName();
+    WRQ(string fileName);
 
 };

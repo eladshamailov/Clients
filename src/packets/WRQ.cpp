@@ -4,12 +4,9 @@
 
 #include <packets/WRQ.h>
 
-std::wstring WRQ::getFileName()
+string WRQ::getFileName()
 {
     return fileName;
 }
 
-WRQ::WRQ(const std::wstring &name) : Packet((short)2)
-{
-    this->fileName = name;
-}
+WRQ::WRQ(string fleName) : Packet((short)2),fileName(fileName){}

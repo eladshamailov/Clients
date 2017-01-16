@@ -4,13 +4,9 @@
 
 #include <packets/RRQ.h>
 
-std::wstring RRQ::getName()
+string RRQ::getName()
 {
     return fileName;
 }
 
-RRQ::RRQ(const std::wstring &name) : Packet((short)1)
-{
-
-    this->fileName = name;
-}
+RRQ::RRQ(string fileName) : Packet((short)1),fileName(fileName){}

@@ -11,8 +11,8 @@
 class LOGRQ : public Packet
 {
 private:
-    std::wstring userName;
+    string userName;
 public:
-    LOGRQ(const std::wstring &userName);
-    virtual std::wstring getUserName();
+    LOGRQ(string userName);
+    virtual string getUserName();
 };

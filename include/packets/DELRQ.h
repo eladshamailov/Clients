@@ -11,8 +11,8 @@
 class DELRQ : public Packet
 {
 private:
-    std::wstring fileName;
+    string fileName;
 public:
-    DELRQ(const std::wstring &name);
-    virtual std::wstring getFileName();
+    DELRQ(string fileName);
+    virtual string getFileName();
 };

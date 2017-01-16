@@ -5,10 +5,8 @@
 #include <packets/ACK.h>
 #include "packets/Packet.h"
 
-ACK::ACK(short block) : Packet((short)4)
-{
-    this->block = block;
-}
+ACK::ACK(short block) : Packet((short)4),block(block){}
+
 
 short ACK::getBlock()
 {
