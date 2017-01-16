@@ -22,10 +22,11 @@ short DATA::getBlock()
     return block;
 }
 
-std::vector<char> DATA::getData()
+char* DATA::getData()
 {
-    return data;
-}
+    char ans[sizeof(data)];
+    std::copy(data, data+sizeof(data), ans);
+    return ans;}
 
 short DATA::getPacketSize()
 {
