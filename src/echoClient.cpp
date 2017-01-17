@@ -10,6 +10,7 @@
 ConnectionHandler connection;
 bool running = true;
 
+
 int main(int argc, char *argv[]) {
     if (argc < 3) {
         std::cerr << "Usage: " << argv[0] << " host port" << std::endl << std::endl;
@@ -35,7 +36,7 @@ int main(int argc, char *argv[]) {
 
 
 
-void *SendOutput()
+void echoClient:: SendOutput()
 {
     while (running) {
         const short bufferSize = 1<<10;
@@ -54,10 +55,9 @@ void *SendOutput()
             break;
         }
     }
-    return NULL;
 }
 
-void *ListenInput()
+void echoClient:: ListenInput()
 {
     while (running) {
         std::string answer;
@@ -76,9 +76,9 @@ void *ListenInput()
 
     }
     connection.close();
-    return NULL;
-
 }
+
+
 
 
 
