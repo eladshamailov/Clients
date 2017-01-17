@@ -14,6 +14,7 @@ public:
     static Packet* stringToPacket(string &line);
     void SendOutput();
     void ListenInput();
+     Packet* convertStringToPacket(string &line); //TODO:check if need to be static
 };
 
 #endif //CLIENT_CLIENT_H
