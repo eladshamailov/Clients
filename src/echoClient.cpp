@@ -110,10 +110,6 @@ int echoClient::stringToOpCode(string &line) {
         return 0;
 }
 
-
-
-
-
 Packet echoClient::convertStringToPacket(string &line) {
     string type=line.substr(0,line.find(" "));
     int tmpOpCode=stringToOpCode(type);
@@ -147,6 +143,8 @@ Packet echoClient::convertStringToPacket(string &line) {
             DISC ans;
             return ans;
         }
-
+        default:{
+            cout<<"enter valid input"<<endl;
+        }
     }
 }
