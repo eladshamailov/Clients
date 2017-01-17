@@ -15,14 +15,14 @@ class DATA : public Packet
 private:
     short packetSize = 0;
     short block = 0;
-    char* data;
+    vector <char> data;
 
 public:
-    DATA(short packetSize, short block, char* data);
+    DATA(short packetSize, short block, std::vector<char> data);
 
     virtual short getBlock();
 
-    virtual char* getData();
+    virtual std::vector <char> getData();
 
     virtual short getPacketSize();
 
