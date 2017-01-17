@@ -3,12 +3,14 @@
 #include "echoClient.h"
 #include <boost/locale.hpp>
 #include <thread>
+#include <boost/core/ref.hpp>
 /**
 * This code assumes that the server replies the exact text the client sent it (as opposed to the practical session example)
 */
 
-ConnectionHandler connection;
+echoClient::echoClient(const ConnectionHandler &connection) : connection(connection) {}
 bool running = true;
+
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
@@ -23,12 +25,15 @@ int main(int argc, char *argv[]) {
         std::cerr << "Cannot connect to " << host << ":" << port << std::endl;
         return 1;
     }
+    cout << "I'm Connected" << endl;
+    boost::mutex mutex;
+    KeyboardTask task1(connectionHandler, &mutex);
+    SocketTask task2(connectionHandler, &mutex);
 
-
-    std::thread t1(SendOutput);
-    std::thread t2(ListenInput);
-    t1.join();
-    t2.join();
+    boost::thread th1(boost::bind(&KeyboardTask::run, &task1));
+    boost::thread th2(boost::bind(&SocketTask::run, &task2));
+    th1.join();
+    th2.join();
 
     return 0;
 }
@@ -43,17 +48,16 @@ void echoClient:: SendOutput()
         cin.getline(buffer, bufferSize);
         string line(buffer);
         int length=line.length();
-        if (!connection.sendLine(line)) {
+        // put the packet to outgoing messages (using lock)
+        if (!connection->sendLine(line)) {
             std::cout << "Disconnected. Exiting...\n" << std::endl;
-            running = false;
             break;
         }
-        if (line == "QUIT") {
-            std::cout << "Exiting...\n" << std::endl;
-            running = false;
-            break;
-        }
+        // connectionHandler.sendLine(line) appends '\n' to the message. Therefor we send len+1 bytes.
+        std::cout << "Sent " << length+1 << " bytes to server" << std::endl;
     }
+
+    boost::this_thread::yield(); //Gives up the remainder of the current thread's time slice, to allow other threads to run.
 }
 
 void echoClient:: ListenInput()
@@ -80,7 +84,9 @@ void echoClient:: ListenInput()
 Packet* echoClient::convertStringToPacket(string &line) {
 
 
-
-
-
 }
+
+
+
+
+
