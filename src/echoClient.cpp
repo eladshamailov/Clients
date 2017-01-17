@@ -77,8 +77,8 @@ void *ListenInput()
     }
     connection.close();
     return NULL;
-
 }
 
+Packet* echoClient::convertStringToPacket(string &line) {
 
-
+}
