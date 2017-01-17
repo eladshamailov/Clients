@@ -6,18 +6,18 @@
 #include <vector>
 #include <packets/DATA.h>
 
-DATA::DATA(short packetSize, short block, char* data) : Packet((short)3),packetSize(packetSize),block(block),data(data){}
+DATA::DATA(short packetSize, short block, std::vector<char> data) : Packet((short)3),packetSize(packetSize),block(block),data(data){}
 
 short DATA::getBlock()
 {
     return block;
 }
 
-char* DATA::getData()
+std::vector <char> DATA::getData()
 {
-    char ans[sizeof(data)];
-    std::copy(data, data+sizeof(data), ans);
-    return ans;}
+    //TODO:check if the return is good
+    return data;
+}
 
 short DATA::getPacketSize()
 {
