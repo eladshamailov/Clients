@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
 
 
 
-void *SendOutput()
+void echoClient:: SendOutput()
 {
     while (running) {
         const short bufferSize = 1<<10;
@@ -62,10 +62,9 @@ void *SendOutput()
             break;
         }
     }
-    return NULL;
 }
 
-void *ListenInput()
+void echoClient:: ListenInput()
 {
     while (running) {
         std::string answer;
@@ -84,7 +83,6 @@ void *ListenInput()
 
     }
     connection.close();
-    return NULL;
 }
 
 int echoClient::stringToOpCode(string &line) {
@@ -111,6 +109,10 @@ int echoClient::stringToOpCode(string &line) {
     else
         return 0;
 }
+
+
+
+
 
 Packet echoClient::convertStringToPacket(string &line) {
     string type=line.substr(0,line.find(" "));

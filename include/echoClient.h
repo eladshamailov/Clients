@@ -11,4 +11,6 @@ public:
     static string checkFunction(string &line);
      Packet convertStringToPacket(string &line); //TODO:check if need to be static
     int stringToOpCode(string &line);
+    void SendOutput();
+    void ListenInput();
 };
