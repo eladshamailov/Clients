@@ -3,6 +3,14 @@
 #include "echoClient.h"
 #include <boost/locale.hpp>
 #include <thread>
+#include <packets/ACK.h>
+#include <packets/RRQ.h>
+#include <packets/WRQ.h>
+#include <packets/DIRQ.h>
+#include <packets/LOGRQ.h>
+#include <packets/DELRQ.h>
+#include <packets/DISC.h>
+
 /**
 * This code assumes that the server replies the exact text the client sent it (as opposed to the practical session example)
 */
@@ -79,6 +87,64 @@ void *ListenInput()
     return NULL;
 }
 
-Packet* echoClient::convertStringToPacket(string &line) {
+int echoClient::stringToOpCode(string &line) {
+    if(line.compare("RRQ")==0)
+        return 1;
+    else if(line.compare("WRQ")==0)
+        return 2;
+    else if (line.compare("DATA")==0)
+        return 3;
+    else if (line.compare("ACK")==0)
+        return 4;
+    else if(line.compare("ERROR")==0)
+        return 5;
+    else if(line.compare("DIRQ")==0)
+        return 6;
+    else if(line.compare("LOGRQ")==0)
+        return 7;
+    else if(line.compare("DELRQ")==0)
+        return 8;
+    else if(line.compare("BCAST")==0)
+        return 9;
+    else if(line.compare("DISC")==0)
+        return 10;
+    else
+        return 0;
+}
 
+Packet echoClient::convertStringToPacket(string &line) {
+    string type=line.substr(0,line.find(" "));
+    int tmpOpCode=stringToOpCode(type);
+    string toSend=line.substr(line.find(" "),line.length()-1);
+    switch (tmpOpCode){
+        case 1:{
+            RRQ ans(toSend);
+            return ans;
+        }
+        case 2:{
+            WRQ ans(toSend);
+            return ans;
+        }
+        case 4:{
+            ACK ans((short)stoi(toSend));
+            return ans;
+        }
+        case 6:{
+            DIRQ ans;
+            return ans;
+        }
+        case 7: {
+            LOGRQ ans(toSend);
+            return ans;
+        }
+        case 8:{
+            DELRQ ans(toSend);
+            return ans;
+        }
+        case 10:{
+            DISC ans;
+            return ans;
+        }
+
+    }
 }
