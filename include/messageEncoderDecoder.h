@@ -1,8 +1,14 @@
 //
-// Created by nir on 16/01/17.
+// Created by elad on 1/20/17.
 //
 
-#ifndef CLIENTS_mESSAGEENCODERDECODER_H
-#define CLIENTS_mESSAGEENCODERDECODER_H
+#ifndef CLIENTS_MESSAGEENCODERDECODER_H
+#define CLIENTS_MESSAGEENCODERDECODER_H
 
-#endif //CLIENTS_mESSAGEENCODERDECODER_H
+
+class messageEncoderDecoder {
+
+};
+
+
+#endif //CLIENTS_MESSAGEENCODERDECODER_H
