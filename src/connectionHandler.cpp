@@ -1,5 +1,5 @@
-#include "connectionHandler.h"
-
+#include <connectionHandler.h>
+ 
 using boost::asio::ip::tcp;
 
 using std::cin;
@@ -29,6 +29,21 @@ bool ConnectionHandler::connect() {
         return false;
     }
     return true;
+}
+
+void Connectionhandler::run(){
+    while(!terminate) {
+        Packet* packet = getline();
+        if(packet!= null){
+            Packet* response = process(packet);
+            delete packet;
+            if(response!=null){
+                sendPacket(response);
+                delete response;
+            }
+        } else
+            throw;
+    }
 }
 
 bool ConnectionHandler::getBytes(char bytes[], unsigned int bytesToRead) {
@@ -73,7 +88,7 @@ bool ConnectionHandler::sendLine(std::string& line) {
 
 bool ConnectionHandler::getFrameAscii(std::string& frame, char delimiter) {
     char ch;
-    // Stop when we encounter the null character.
+    // Stop when we encounter the null character. 
     // Notice that the null character is not appended to the frame string.
     try {
         do{
