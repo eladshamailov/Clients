@@ -2,7 +2,91 @@
 // Created by nir on 16/01/17.
 //
 
-#ifndef CLIENTS_MESSAGEENCODERDECODER_H
-#define CLIENTS_MESSAGEENCODERDECODER_H
+#pragma once
 
-#endif //CLIENTS_MESSAGEENCODERDECODER_H
+#include "MessageEncoderDecoder.h"
+#include <packets/Packet.h>
+#include <string>
+#include <vector>
+
+
+/// <summary>
+/// Created by ROTEM on 09/01/2017.
+/// </summary>
+class MessageEncoderDecoder{
+
+private:
+
+    short opCode = 0;
+    Packet* res;
+
+    char* lengthArr;
+    short lengthArrSize=0;
+    short lengthArrIndex=0;
+
+    char* errorArr;
+    short errorArrSize=0;
+    short errorArrIndex=0;
+
+    short errorCode = -1;
+
+    char* packetArr;
+    short packetArrSize=0;
+    short packetArrIndex=0;
+
+    short packetSize=0;
+
+    char* blockArr;
+    short blockArrSize=0;
+    short blockArrIndex=0;
+
+    short block=0;
+
+    char deletedAdd = 0;
+
+public:
+    virtual ~MessageEncoderDecoder() {
+        delete res;
+    }
+
+    MessageEncoderDecoder();
+
+private:
+    void initAll();
+
+    void initOpObjects();
+
+public:
+    virtual Packet *decodeNextByte(char nextByte);
+
+private:
+    void makeBCastPacket(char nextByte) ;
+
+    void makeDelRqPacket(char nextByte) ;
+
+    void makeLoginPacket(char nextByte) ;
+
+    //std::vector<char> getDataFromBuffer(ByteBuffer *buffer);
+
+    void makeDIRQPacket();
+
+    void makeErrorPacket(char nextByte) ;
+
+    void makeACKPacket(char nextByte);
+
+    void makeDataPacket(char nextByte);
+
+    void makeWRQPacket(char nextByte) ;
+
+    void makeRRQPacket(char nextByte) ;
+
+    void initOpCodeAndBuffers(char nextByte);
+
+    //@TODO SHITTTTTTTTTTTTTTTTTTTTTTTTTTTT
+public:
+    virtual char* encode(Packet *message);
+
+    short bytesToShort(char bytesArr[]);
+    void shortToBytes(short num, char bytesArr[]);
+
+};
