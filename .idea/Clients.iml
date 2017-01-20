@@ -17,10 +17,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/packets/WRQ.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/packets/BCAST.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/echoClient.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/connectionHandler.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/echoClient.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/messageEncoderDecoder.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/ReadUser.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/LOGRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/DATA.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/DISC.h" isTestSource="false" />
@@ -32,6 +28,12 @@
       <sourceFolder url="file://$MODULE_DIR$/include/packets/DELRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/BCAST.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/ACK.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/connectionHandler.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/messageEncoderDecoder.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/bytesAndShortConvertor.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/bytesAndShortConvertor.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/ReadUser.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/echoClient.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/makefile" isTestSource="false" />
     </content>
