@@ -1,6 +1,57 @@
 #include <stdlib.h>
 #include <connectionHandler.h>
 #include <packets/Packet.h>
+#include <packets/DISC.h>
+#include <packets/DIRQ.h>
+#include <packets/WRQ.h>
+#include <packets/ACK.h>
+#include <packets/LOGRQ.h>
+#include <packets/DELRQ.h>
+#include <packets/RRQ.h>
+#include <boost/thread.hpp>
+using namespace std;
+
+
+Packet* convertStringToPacket(string &st){
+    string opCode;
+    string name;
+    int i = 0;
+    for (i; (i < st.length()) && (st.at(i) != ' '); i++){
+        opCode.push_back(st.at(i));
+    }
+    for (i++; (i < st.length()) && (st.at(i) != '/0'); i++) {
+        name.push_back(st.at(i));
+    }
+    if(opCode.compare("DIRQ")==0){
+        DIRQ* ans;
+        return ans;
+    }
+    if(opCode.compare("DISC")==0){
+        DISC* ans;
+        return ans;
+    }
+    if (opCode.compare("RRQ") == 0) {
+        RRQ packet(name);
+        return &(Packet)packet;
+    }
+    else if (opCode.compare("WRQ") == 0) {
+        WRQ packet(name);
+        return &(Packet)packet;
+    }
+    else if (opCode.compare("LOGRQ") == 0) {
+        LOGRQ packet(name);
+        return &(Packet)packet;
+
+    }
+    else if (opCode.compare("DELRQ") == 0) {
+        DELRQ packet(name);
+        return &(Packet)packet;
+    }
+    else {
+        cout << "there is a problem in the string" << endl;
+        return nullptr;
+    }
+}
 
 /**
 * This code assumes that the server replies the exact text the client sent it (as opposed to the practical session example)
@@ -19,23 +70,23 @@ int main (int argc, char *argv[]) {
         return 1;
     }
 
-    //create thread 2;
+    //create thread keyBoard;
+    boost::thread thread2(boost::bind(&ConnectionHandler::run, &connectionHandler));
 
     //From here we will see the rest of the ehco client implementation:
     while (true) {
         const short bufsize = 1024;
         char buf[bufsize];
-        std::cin.getline(buf, bufsize);
-        std::string line(buf);
-        string comment = checkLine(line);
-        if(comment == "OK"){
-            Packet* packet = stringToPacket(line);
-            if (!connectionHandler.sendPacket(packet)) {
+        cin.getline(buf, bufsize);
+        string line(buf);
+        Packet* comment = convertStringToPacket(line);
+        if(comment != nullptr){
+            if (!connectionHandler.sendPacket(comment)) {
                 std::cout << "Disconnected. Exiting...\n" << std::endl;
                 break;
             }
-            delete packet;
-            if(packet->getOpCode() == 10)
+            delete comment;
+            if(comment->getOpCode() == 10)
                 break;
         } else
             std::cout << comment <<endl;
@@ -71,3 +122,6 @@ int main (int argc, char *argv[]) {
 
     return 0;
 }
+
+
+
