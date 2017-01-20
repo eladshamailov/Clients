@@ -51,7 +51,7 @@ public:
     // Close down the connection properly.
     void close();
 
-    bool send(Packet *pack);
+    bool sendPacket(Packet *pack);
 
 }; //class ConnectionHandler
 

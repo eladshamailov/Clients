@@ -215,6 +215,6 @@ void ConnectionHandler::close() {
     }
 }
 
-bool ConnectionHandler::send(Packet *pack){
+bool ConnectionHandler::sendPacket(Packet *pack){
     
 }
