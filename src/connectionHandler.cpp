@@ -125,6 +125,7 @@ using std::string;
 
 ConnectionHandler::ConnectionHandler(string host, short port): host_(host), port_(port), io_service_(), socket_(io_service_){
     encdec=messageEncoderDecoder();
+    lastPacketSent=0;
 }
 
 ConnectionHandler::~ConnectionHandler() {
@@ -220,9 +221,12 @@ void ConnectionHandler::close() {
     }
 }
 
-bool ConnectionHandler::sendPacket(Packet *pack){
-
-}
+bool ConnectionHandler::sendPacket(Packet *packet) {
+        this->lastPacketSent = packet->getOpCode();
+        char encodeArray[1<<10];
+        encdec.encode(packet, encodeArray);
+        return sendBytes(encodeArray, packet->getSize());
+    }
 
 void ConnectionHandler::run(){
     while(!terminate) {

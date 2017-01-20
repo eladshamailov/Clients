@@ -6,12 +6,14 @@
 #include <boost/asio.hpp>
 #include <packets/Packet.h>
 #include "messageEncoderDecoder.h"
+#include "bytesAndShortConvertor.h"
 
 
 using boost::asio::ip::tcp;
 
 class ConnectionHandler {
 private:
+    int lastPacketSent;
     const std::string host_;
     const short port_;
     boost::asio::io_service io_service_;   // Provides core I/O functionality
