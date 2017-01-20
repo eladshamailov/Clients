@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <boost/asio.hpp>
+#include <packets/Packet.h>
 #include "messageEncoderDecoder.h"
 
 
@@ -49,6 +50,8 @@ public:
 
     // Close down the connection properly.
     void close();
+
+    bool send(Packet *pack);
 
 }; //class ConnectionHandler
 
