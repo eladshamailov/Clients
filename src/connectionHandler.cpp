@@ -221,22 +221,25 @@ void ConnectionHandler::close() {
 }
 
 bool ConnectionHandler::sendPacket(Packet *pack){
-    
+
 }
-//void ConnectionHandler::run(){
-//    while(!terminate) {
-//        Packet* packet = getline();
-//        if(packet!= nullptr){
-//            Packet* response = process(packet);
-//            delete packet;
-//            if(response!= nullptr){
-//                sendPacket(response);
-//                delete response;
-//            }
-//        } else
-//            throw;
-//    }
-//}
+
+void ConnectionHandler::run(){
+    while(!terminate) {
+        char c;
+        short opCode=opCodeSender();
+        Packet* packet = getline(c,opCode);
+        if(packet!= nullptr){
+            Packet* response = process(*packet);
+            delete packet;
+            if(response!= nullptr){
+                sendPacket(response);
+                delete response;
+            }
+        } else
+            throw;
+    }
+}
 
 Packet* ConnectionHandler::process(Packet &packet) {
     if(packet.getOpCode()==4){//ACK
@@ -279,3 +282,20 @@ Packet* ConnectionHandler::getline(char c,short opCode) {
     }
     return nullptr;
     }
+
+short ConnectionHandler::opCodeSender(){
+    char c;
+    string line;
+    short opCode;
+    try {
+        getBytes(&c, 1);
+        line.append(1, c);
+        getBytes(&c, 1);
+        line.append(1, c);
+    }
+    catch (exception exp){
+        cout<<exp.what()<<endl;
+    }
+    opCode= convertor.bytesToShort((char*) line.c_str());
+    return opCode;
+}

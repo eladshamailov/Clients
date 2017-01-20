@@ -58,6 +58,7 @@ public:
 
     Packet* process(Packet &packet){};
     Packet* getline(char c,short opCode) {}
+    short opCodeSender(){}
 
 }; //class ConnectionHandler
 
