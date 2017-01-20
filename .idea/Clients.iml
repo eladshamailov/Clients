@@ -2,9 +2,6 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/messageEncoderDecoder.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/connectionHandler.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/ReadUser.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/packets/DISC.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/packets/RRQ.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/packets/ACK.cpp" isTestSource="false" />
@@ -16,21 +13,24 @@
       <sourceFolder url="file://$MODULE_DIR$/src/packets/DELRQ.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/packets/WRQ.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/packets/BCAST.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/bytesAndShortConvertor.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/echoClient.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/ReadUser.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/connectionHandler.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/messageEncoderDecoder.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/packets/DIRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/LOGRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/DATA.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/DISC.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/packets/WRQ.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/packets/DIRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/RRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/ERROR.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/Packet.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/packets/WRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/DELRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/BCAST.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/ACK.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/connectionHandler.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/messageEncoderDecoder.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/bytesAndShortConvertor.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/bytesAndShortConvertor.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/ReadUser.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/echoClient.h" isTestSource="false" />
