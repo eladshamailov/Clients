@@ -240,7 +240,7 @@ bool ConnectionHandler::sendPacket(Packet *pack){
 
 Packet* ConnectionHandler::process(Packet &packet) {
     if(packet.getOpCode()==4){//ACK
-        ACK& ackPacket=(ACK&)(packet);//TODO:check if the cast works good or we nned to use dynamic_cast
+        ACK& ackPacket=(ACK&)(packet);//TODO:check if the cast works good or we need to use dynamic_cast
         cout<<"ACK"<<ackPacket.getBlock()<<endl;
         return nullptr;
     } else if(packet.getOpCode()==5){//ERROR
@@ -279,65 +279,3 @@ Packet* ConnectionHandler::getline(char c,short opCode) {
     }
     return nullptr;
     }
-
-Packet* ConnectionHandler::getLine() {
-    char ch;
-    string line;
-    try {
-        for (int a = 1; a <= 2; a++) {
-            getBytes(&ch, 1);
-            line.append(1, ch);
-        }
-        short opCode = bytesToShort((char *) line.c_str());
-        line.clear();
-        short packetSize;
-        if (opCode == 3) {
-            for (int a = 1; a <= 2; a++) {
-                getBytes(&ch, 1);
-                line.append(1, ch);
-            }
-            packetSize = bytesToShort((char *) line.substr(0, 2).c_str());
-            for (int a = 1; a <= packetSize + 2; a++) {
-                getBytes(&ch, 1);
-                line.append(1, ch);
-            }
-            char *result = new char[line.length() - 4];
-            for (unsigned int i = 4; i < line.length(); i++) {
-                result[i-4] = line[i];
-            }
-            return new DATA(packetSize, bytesToShort((char *) line.substr(2, 4).c_str()), result);
-        } else if (opCode == 4) {
-            for (int a = 1; a <= 2; a++) {
-                getBytes(&ch, 1);
-                line.append(1, ch);
-            }
-
-            return new ACK(bytesToShort((char *) line.c_str()));
-        } else if (opCode == 5) {
-            getBytes(&ch, 1);
-            line.append(1, ch);
-            getBytes(&ch, 1);
-            line.append(1, ch);
-            do {
-                getBytes(&ch, 1);
-                line.append(1, ch);
-            } while (ch != '\0');
-            return new ERROR(bytesToShort((char *) line.substr(0, 2).c_str()), line.substr(2, line.length()));
-        } else if (opCode == 9) {
-            getBytes(&ch, 1);
-            line.append(1, ch);
-            do {
-                getBytes(&ch, 1);
-                line.append(1, ch);
-            } while (ch != '\0');
-
-            if(line.substr(0, 1) == "1")
-                return new BCAST(true, line.substr(1, line.length()));
-            else
-                return new BCAST(false, line.substr(1, line.length()));
-        }
-    } catch (std::exception &e) {
-        std::cerr << "recv failed (Error: " << e.what() << ')' << std::endl;
-    }
-    return nullptr;
-}
