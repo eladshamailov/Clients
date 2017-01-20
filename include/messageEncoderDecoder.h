@@ -5,9 +5,14 @@
 #ifndef CLIENTS_MESSAGEENCODERDECODER_H
 #define CLIENTS_MESSAGEENCODERDECODER_H
 
+#include <vector>
+#include <string>
+
+using namespace std;
 
 class messageEncoderDecoder {
-
+public:
+    vector <char> encode(string line){};
 };
 
 

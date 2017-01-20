@@ -20,27 +20,6 @@
 
 
 class ListenToKeyboard {
-
-    enum class Status {
-        normal,
-        readingFromServer,
-        dir
-    };
-
-private:
-    Status status;
-    ConnectionHandler connectionHandler;
-
-public:
-    ListenToKeyboard(const ConnectionHandler &connectionHandler);
-
-    void run(Packet);
-
-    void setStatus(const string &status);
-
-    const string &getStatus() const;
-
-    Packet * createNewPacketFromKeyboard() const;
 };
 
 

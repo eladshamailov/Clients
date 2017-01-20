@@ -180,6 +180,7 @@ bool ConnectionHandler::getLine(std::string& line) {
 }
 
 bool ConnectionHandler::sendLine(std::string& line) {
+    vector<char> encLine = encdec.encode(line);
     return sendFrameAscii(line, '\n');
 }
 
