@@ -4,6 +4,15 @@
 #include <packets/WRQ.h>
 #include <packets/ERROR.h>
 #include <bytesAndShortConvertor.h>
+#include <packets/Packet.h>
+#include <packets/DISC.h>
+#include <packets/DIRQ.h>
+#include <packets/WRQ.h>
+#include <packets/ACK.h>
+#include <packets/LOGRQ.h>
+#include <packets/DELRQ.h>
+#include <packets/RRQ.h>
+#include <boost/thread.hpp>
 
 using boost::asio::ip::tcp;
 
@@ -225,7 +234,16 @@ bool ConnectionHandler::sendPacket(Packet *packet) {
         this->lastPacketSent = packet->getOpCode();
         char encodeArray[1<<10];
         encdec.encode(packet, encodeArray);
-        return sendBytes(encodeArray, packet->getSize());
+        if (packet->getOpCode()==7) {
+            return sendBytes(encodeArray,((LOGRQ*) packet)->getLength());
+        }
+        else if (packet->getOpCode()==5) {
+        return sendBytes(encodeArray,((ERROR*) packet)->getLength());
+        }
+        else if (packet->getOpCode()==4) {
+        return sendBytes(encodeArray,((ACK*) packet)->getLength());
+     }
+
     }
 
 void ConnectionHandler::run(){
@@ -300,6 +318,6 @@ short ConnectionHandler::opCodeSender(){
     catch (exception exp){
         cout<<exp.what()<<endl;
     }
-    opCode= convertor.bytesToShort((char*) line.c_str());
+    opCode= (short)(convertor.bytesToShort((char*) line.c_str()));
     return opCode;
 }

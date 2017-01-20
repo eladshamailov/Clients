@@ -7,7 +7,7 @@
 #ifndef CLIENTS_WRQ_H
 #define CLIENTS_WRQ_H
 
-#endif //CLIENTS_WRQ_H
+
 class WRQ : public Packet
 {
 private:
@@ -17,3 +17,5 @@ public:
     WRQ(string fileName);
 
 };
+
+#endif //CLIENTS_WRQ_H

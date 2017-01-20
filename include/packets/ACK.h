@@ -7,7 +7,7 @@
 #ifndef CLIENTS_ACK_H
 #define CLIENTS_ACK_H
 
-#endif //CLIENTS_ACK_H
+
 class ACK : public Packet
 {
 private:
@@ -15,4 +15,7 @@ private:
 public:
     ACK(short block);
     virtual short getBlock();
+    int getLength();
 };
+
+#endif //CLIENTS_ACK_H

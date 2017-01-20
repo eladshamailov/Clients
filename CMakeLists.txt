@@ -1,23 +1,24 @@
 cmake_minimum_required(VERSION 3.6)
-project(Clients)
+set (PROJECT_NAME "Clients1" CXX)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-find_package (Boost 1.53 COMPONENTS system filesystem REQUIRED)
+
+project (${PROJECT_NAME})
+set (PROJECT_SOURCE_DECLARATION_DIRECTORY ${PROJECT_SOURCE_DIR}/include)
+set (PROJECT_SOURCE_DEFINITION_DIRECTORY ${PROJECT_SOURCE_DIR}/src)
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set (MAIN_FILE ${PROJECT_SOURCE_DEFINITION_DIRECTORY}/echoClient.cpp)
+
+find_package (Boost 1.53 COMPONENTS thread log log_setup date_time program_options filesystem system REQUIRED)
 if (Boost_FOUND)
     include_directories (${Boost_INCLUDE_DIR})
+    link_directories(${Boost_LIBRARY_DIR})
 endif ()
+
 include_directories(include src)
-set(SOURCE_FILES
-        include/connectionHandler.h
-        src/connectionHandler.cpp
-        src/echoClient.cpp
-        makefile include/packets/Packet.h src/packets/Packet.cpp include/packets/ACK.h src/packets/ACK.cpp include/packets/DATA.h src/packets/DATA.cpp include/packets/DELRQ.h src/packets/DELRQ.cpp include/packets/BCAST.h src/packets/BCAST.cpp include/packets/DIRQ.h src/packets/DIRQ.cpp include/packets/DISC.h src/packets/DISC.cpp include/packets/ERROR.h src/packets/ERROR.cpp include/packets/LOGRQ.h src/packets/LOGRQ.cpp include/packets/RRQ.h src/packets/RRQ.cpp include/packets/WRQ.h src/packets/WRQ.cpp include/echoClient.h src/messageEncoderDecoder.cpp include/messageEncoderDecoder.h src/bytesAndShortConvertor.cpp include/bytesAndShortConvertor.h)
 
-add_executable(Clients ${SOURCE_FILES})
-TARGET_LINK_LIBRARIES( Clients ${Boost_LIBRARIES} )
+file(GLOB SOURCES "src/*.cpp" "include/packets/*.h" "src/packets/*.cpp" "include/*.h")
 
+add_executable(${PROJECT_NAME} ${SOURCES})
 
-
-
-
-
+TARGET_LINK_LIBRARIES( ${PROJECT_NAME} ${Boost_LIBRARIES} )

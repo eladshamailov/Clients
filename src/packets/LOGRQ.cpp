@@ -11,3 +11,10 @@ string LOGRQ::getUserName()
 {
     return userName;
 }
+
+int LOGRQ::getLength() {
+    return userName.length();
+}
+
+
+

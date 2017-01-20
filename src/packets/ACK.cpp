@@ -12,3 +12,7 @@ short ACK::getBlock()
 {
     return block;
 }
+
+int ACK::getLength(){
+    return 4;
+}

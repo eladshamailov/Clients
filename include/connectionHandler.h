@@ -4,9 +4,8 @@
 #include <string>
 #include <iostream>
 #include <boost/asio.hpp>
-#include <packets/Packet.h>
-#include "messageEncoderDecoder.h"
 #include "bytesAndShortConvertor.h"
+#include "messageEncoderDecoder.h"
 
 
 using boost::asio::ip::tcp;
@@ -58,9 +57,9 @@ public:
 
     void run();
 
-    Packet* process(Packet &packet){};
-    Packet* getline(char c,short opCode) {}
-    short opCodeSender(){}
+    Packet* process(Packet &packet);
+    Packet* getline(char c,short opCode);
+    short opCodeSender();
 
 }; //class ConnectionHandler
 

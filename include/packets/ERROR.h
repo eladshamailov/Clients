@@ -7,7 +7,7 @@
 #ifndef CLIENTS_ERROR_H
 #define CLIENTS_ERROR_H
 
-#endif //CLIENTS_ERROR_H
+
 class ERROR : public Packet
 {
 private:
@@ -19,4 +19,8 @@ public:
     virtual short getErrorCode();
 
     virtual string getErrorMessage();
+
+    int getLength();
 };
+
+#endif //CLIENTS_ERROR_H

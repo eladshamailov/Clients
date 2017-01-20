@@ -23,29 +23,22 @@ Packet* convertStringToPacket(string &st){
         name.push_back(st.at(i));
     }
     if(opCode.compare("DIRQ")==0){
-        DIRQ* ans;
-        return ans;
+        return new DIRQ();
     }
     if(opCode.compare("DISC")==0){
-        DISC* ans;
-        return ans;
+        return new DISC();
     }
     if (opCode.compare("RRQ") == 0) {
-        RRQ packet(name);
-        return &(Packet)packet;
+        return new RRQ(name);
     }
     else if (opCode.compare("WRQ") == 0) {
-        WRQ packet(name);
-        return &(Packet)packet;
+        return new WRQ(name);
     }
     else if (opCode.compare("LOGRQ") == 0) {
-        LOGRQ packet(name);
-        return &(Packet)packet;
-
+        return new LOGRQ(name);
     }
     else if (opCode.compare("DELRQ") == 0) {
-        DELRQ packet(name);
-        return &(Packet)packet;
+        return new DELRQ(name);
     }
     else {
         cout << "there is a problem in the string" << endl;

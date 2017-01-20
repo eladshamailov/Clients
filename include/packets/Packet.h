@@ -5,7 +5,6 @@
 #ifndef CLIENTS_PACKET_H
 #define CLIENTS_PACKET_H
 
-#endif //CLIENTS_PACKET_H
 #include <string>
 
 using namespace std;
@@ -19,3 +18,5 @@ public:
 
     virtual short getOpCode();
 };
+
+#endif //CLIENTS_PACKET_H
