@@ -17,6 +17,7 @@ private:
     boost::asio::io_service io_service_;   // Provides core I/O functionality
     tcp::socket socket_;
     messageEncoderDecoder encdec;
+    bytesAndShortConvertor convertor;
 public:
     ConnectionHandler(std::string host, short port);
     virtual ~ConnectionHandler();
@@ -54,6 +55,9 @@ public:
     bool sendPacket(Packet *pack);
 
     void run();
+
+    Packet* process(Packet &packet){};
+    Packet* getline(char c,short opCode) {}
 
 }; //class ConnectionHandler
 
