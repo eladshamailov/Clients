@@ -6,11 +6,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src/connectionHandler.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/ReadUser.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/packets/DISC.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/packets/RRQ.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/packets/ACK.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/packets/Packet.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/packets/LOGRQ.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/packets/DATA.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/packets/Packet.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/packets/RRQ.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/packets/ERROR.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/packets/DIRQ.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/packets/DELRQ.cpp" isTestSource="false" />
@@ -21,14 +21,14 @@
       <sourceFolder url="file://$MODULE_DIR$/include/echoClient.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/messageEncoderDecoder.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/ReadUser.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/packets/DIRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/LOGRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/DATA.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/DISC.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/packets/WRQ.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/packets/DIRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/RRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/ERROR.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/Packet.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/packets/WRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/DELRQ.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/BCAST.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/packets/ACK.h" isTestSource="false" />
