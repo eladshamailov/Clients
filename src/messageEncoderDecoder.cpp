@@ -20,7 +20,6 @@ void messageEncoderDecoder::encode(Packet *pack, char *answerArr) {
     long check=5;
     char answer[2];
     char blockedArray[2];
-    char userNameWithZero[512];
     convert.shortToBytes(pack->getOpCode(), answer);
     char zero[1];
     zero[0] = '\0';
@@ -32,8 +31,9 @@ void messageEncoderDecoder::encode(Packet *pack, char *answerArr) {
             mergeArrays(answer, 2, blockedArray, 2, answerArr);
         } else if (opCode == 7) {
             LOGRQ *LOGRQPacket = (LOGRQ*) pack;
+            char userNameWithZero[LOGRQPacket->getUserName().length() + 1];
             mergeArrays((char *) LOGRQPacket->getUserName().c_str(), LOGRQPacket->getUserName().length(), zero, 1, userNameWithZero);
-            mergeArrays(answer, 2, userNameWithZero, 512, answerArr);
+            mergeArrays(answer, 2, userNameWithZero, sizeof(userNameWithZero), answerArr);
         } else { //other options
             memcpy(answerArr, answer, 2);
         }
@@ -48,38 +48,43 @@ void messageEncoderDecoder::encode(Packet *pack, char *answerArr) {
 
 char* messageEncoderDecoder::mergeArrays(char *ptr1, int m, char *ptr2, int n,char *connected)
 {
-    char *p=new char[m+n],i,j,k;
-    for(i=0,k=m-1;i<(m/2);i++,k--) //to reverse the fir``st array from ascending to descending
-    {
-        j=*(ptr1+i);
-        *(ptr1+i)=*(ptr1+k);
-        *(ptr1+k)=j;
-    }
-    for(i=0,j=0,k=0;i<m&&j<n;)
-    {
-        if (*(ptr1+i) > *(ptr2+j))
-        {
-            *(p+k)=*(ptr1+i);
-            i++;k++;
-        }
-        else
-        {
-            *(p+k)=*(ptr2+j);
-            j++;k++;
-        }
-    }
-    if(i==m)
-        while(j<n)
-        {
-            *(p+k)=*(ptr2+j);
-            j++;k++;
-        }
-    else if(j==n)
-        while(i<m)
-        {
-            *(p+k)=*(ptr1+i);
-            i++;k++;
-        }
-    connected=p;
-    return connected;
+//    char *p=new char[m+n],i,j,k;
+//    for(i=0,k=m-1;i<(m/2);i++,k--) //to reverse the fir``st array from ascending to descending
+//    {
+//        j=*(ptr1+i);
+//        *(ptr1+i)=*(ptr1+k);
+//        *(ptr1+k)=j;
+//    }
+//    for(i=0,j=0,k=0;i<m&&j<n;)
+//    {
+//        if (*(ptr1+i) > *(ptr2+j))
+//        {
+//            *(p+k)=*(ptr1+i);
+//            i++;k++;
+//        }
+//        else
+//        {
+//            *(p+k)=*(ptr2+j);
+//            j++;k++;
+//        }
+//    }
+//    if(i==m)
+//        while(j<n)
+//        {
+//            *(p+k)=*(ptr2+j);
+//            j++;k++;
+//        }
+//    else if(j==n)
+//        while(i<m)
+//        {
+//            *(p+k)=*(ptr1+i);
+//            i++;k++;
+//        }
+//    return connected;
+
+    char* full_text;
+    full_text= (char *) malloc(strlen(ptr1) + strlen(ptr2) + 1);
+    strcpy(full_text, ptr1 );
+    strcat(full_text, ptr2);
+    return full_text;
 }
