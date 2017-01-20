@@ -12,50 +12,74 @@
 #include <packets/LOGRQ.h>
 #include <packets/DELRQ.h>
 #include <packets/RRQ.h>
+#include <bytesAndShortConvertor.h>
 
-void messageEncoderDecoder::encode(Packet *packet, char *encodedArr) {
-    char result[2];
-    shortToBytes(packet->getOpCode(), result);
 
+void messageEncoderDecoder::encode(Packet *pack, char *answerArr) {
+    bytesAndShortConvertor convert;
+    long check=5;
+    char answer[2];
+    char blockedArray[2];
+    char userNameWithZero[512];
+    convert.shortToBytes(pack->getOpCode(), answer);
     char zero[1];
     zero[0] = '\0';
-    char blockArr[2];
-    char packetSize[2];
-    char fileNameWithZero[512];
-    char userNameWithZero[512];
-
-    short opCode = packet->getOpCode();
-
-    if (opCode == 1) {
-        RRQ *RRQPack = (RRQ *) packet;
-        strcpy(fileNameWithZero, (RRQPack->getFileName() + '\0').c_str());
-        connectArrays(result, 2, fileNameWithZero, 512, encodedArr);
-    } else if (opCode == 2) {
-        WRQ *WRQPack = (WRQ *) packet;
-        strcpy(fileNameWithZero, (WRQPack->getFileName() + '\0').c_str());
-        connectArrays(result, 2, fileNameWithZero, 512, encodedArr);
-    } else if (opCode == 3) {
-        DATA *DATAPack = (DATA *) packet;
-        shortToBytes(DATAPack->getBlock(), blockArr);
-        shortToBytes(DATAPack->getPacketSize(), packetSize);
-        char temp[4];
-        connectArrays(result, 2, packetSize, 2, temp);
-        char temp2[6];
-        connectArrays(temp, 4, blockArr, 2, temp2);
-        connectArrays(temp2, 6, DATAPack->getData(), DATAPack->getPacketSize(), encodedArr);
-    } else if (opCode == 4) {
-        ACK *ACKPack = (ACK *) packet;
-        shortToBytes(ACKPack->getBlock(), blockArr);
-        connectArrays(result, 2, blockArr, 2, encodedArr);
-    } else if (opCode == 7) {
-        LOGRQ *LOGRQPack = (LOGRQ *) packet;
-        connectArrays(LOGRQPack->getUserName().c_str(), LOGRQPack->getUserName().length(), zero, 1, userNameWithZero);
-        connectArrays(result, 2, userNameWithZero, 512, encodedArr);
-    } else if (opCode == 8) {
-        DELRQ *DELRQPack = (DELRQ *) packet;
-        strcpy(fileNameWithZero, (DELRQPack->getFileName() + '\0').c_str());
-        connectArrays(result, 2, fileNameWithZero, 512, encodedArr);
-    } else { //DIRQ and DISC
-        memcpy(encodedArr, result, 2);
+    short opCode = pack->getOpCode();
+    if (opCode!= 1 && opCode!=2 && opCode!=3 && check!=3) {
+        if (opCode == 4) {
+            ACK *ACKPacket = (ACK*) pack;
+            convert.shortToBytes(ACKPacket->getBlock(), blockedArray);
+            mergeArrays(answer, 2, blockedArray, 2, answerArr);
+        } else if (opCode == 7) {
+            LOGRQ *LOGRQPacket = (LOGRQ*) pack;
+            mergeArrays((char *) LOGRQPacket->getUserName().c_str(), LOGRQPacket->getUserName().length(), zero, 1, userNameWithZero);
+            mergeArrays(answer, 2, userNameWithZero, 512, answerArr);
+        } else { //other options
+            memcpy(answerArr, answer, 2);
+        }
     }
+}
+//
+//char messageEncoderDecoder::mergeArrays(const char *firstArr, int aLength, const char *secondArr, int bLength, char *connected){
+//    memcpy(connected, firstArr, aLength);
+//    memcpy(connected + aLength, secondArr, bLength);
+//
+//}
+
+char* messageEncoderDecoder::mergeArrays(char *ptr1, int m, char *ptr2, int n,char *connected)
+{
+    char *p=new char[m+n],i,j,k;
+    for(i=0,k=m-1;i<(m/2);i++,k--) //to reverse the fir``st array from ascending to descending
+    {
+        j=*(ptr1+i);
+        *(ptr1+i)=*(ptr1+k);
+        *(ptr1+k)=j;
+    }
+    for(i=0,j=0,k=0;i<m&&j<n;)
+    {
+        if (*(ptr1+i) > *(ptr2+j))
+        {
+            *(p+k)=*(ptr1+i);
+            i++;k++;
+        }
+        else
+        {
+            *(p+k)=*(ptr2+j);
+            j++;k++;
+        }
+    }
+    if(i==m)
+        while(j<n)
+        {
+            *(p+k)=*(ptr2+j);
+            j++;k++;
+        }
+    else if(j==n)
+        while(i<m)
+        {
+            *(p+k)=*(ptr1+i);
+            i++;k++;
+        }
+    connected=p;
+    return connected;
 }
