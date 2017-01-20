@@ -180,7 +180,7 @@ bool ConnectionHandler::getLine(std::string& line) {
 }
 
 bool ConnectionHandler::sendLine(std::string& line) {
-    vector<char> encLine = encdec.encode(line);
+  //  char* encodedData= (encdec.encode(line)).data();
     return sendFrameAscii(line, '\n');
 }
 
@@ -218,3 +218,18 @@ void ConnectionHandler::close() {
 bool ConnectionHandler::send(Packet *pack){
     
 }
+//void ConnectionHandler::run(){
+//    while(!terminate) {
+//        Packet* packet = getline();
+//        if(packet!= nullptr){
+//            Packet* response = process(packet);
+//            delete packet;
+//            if(response!= nullptr){
+//                sendPacket(response);
+//                delete response;
+//            }
+//        } else
+//            throw;
+//    }
+//}
+

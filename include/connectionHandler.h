@@ -53,6 +53,8 @@ public:
 
     bool send(Packet *pack);
 
+    void run();
+
 }; //class ConnectionHandler
 
 #endif
