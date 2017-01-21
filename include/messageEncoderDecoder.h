@@ -13,7 +13,7 @@ using namespace std;
 
 class messageEncoderDecoder {
 public:
-    char* mergeArrays(char *ptr1, int m, char *ptr2, int n,char *connected);
+    void mergeArrays(char *ptr1, int m, char *ptr2, int n,char *connected);
     void encode(Packet *pack, char *answerArr);
 
     };

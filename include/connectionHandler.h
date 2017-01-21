@@ -15,6 +15,7 @@ private:
     int lastPacketSent;
     const std::string host_;
     const short port_;
+    bool shouldTerminate;
     boost::asio::io_service io_service_;   // Provides core I/O functionality
     tcp::socket socket_;
     messageEncoderDecoder encdec;
@@ -56,6 +57,8 @@ public:
     bool sendPacket(Packet *pack);
 
     void run();
+
+    bool ifShouledTerminate();
 
     Packet* process(Packet &packet);
     Packet* getline(char c,short opCode);

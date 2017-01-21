@@ -8,3 +8,7 @@
 DISC::DISC() : Packet((short)10)
 {
 }
+
+int DISC::getLength(){
+    return 2;
+}

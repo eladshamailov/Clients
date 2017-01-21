@@ -85,7 +85,8 @@ int main (int argc, char *argv[]) {
         } else
             std::cout << "invalid function" << endl;
         delete comment;
-        thread2.join();
-        return 0;
     }
+
+    thread2.join();
+    return 0;
 }

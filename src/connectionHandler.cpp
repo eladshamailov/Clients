@@ -132,9 +132,11 @@ using std::string;
 //}
 
 
-ConnectionHandler::ConnectionHandler(string host, short port): host_(host), port_(port), io_service_(), socket_(io_service_){
-    encdec=messageEncoderDecoder();
-    lastPacketSent=0;
+ConnectionHandler::ConnectionHandler(string host, short port) : host_(host), port_(port), io_service_(),
+                                                                socket_(io_service_) {
+    encdec = messageEncoderDecoder();
+    shouldTerminate = false;
+    lastPacketSent = 0;
 }
 
 ConnectionHandler::~ConnectionHandler() {
@@ -151,7 +153,7 @@ bool ConnectionHandler::connect() {
         if (error)
             throw boost::system::system_error(error);
     }
-    catch (std::exception& e) {
+    catch (std::exception &e) {
         std::cerr << "Connection failed (Error: " << e.what() << ')' << std::endl;
         return false;
     }
@@ -162,12 +164,12 @@ bool ConnectionHandler::getBytes(char bytes[], unsigned int bytesToRead) {
     size_t tmp = 0;
     boost::system::error_code error;
     try {
-        while (!error && bytesToRead > tmp ) {
-            tmp += socket_.read_some(boost::asio::buffer(bytes+tmp, bytesToRead-tmp), error);
+        while (!error && bytesToRead > tmp) {
+            tmp += socket_.read_some(boost::asio::buffer(bytes + tmp, bytesToRead - tmp), error);
         }
-        if(error)
+        if (error)
             throw boost::system::system_error(error);
-    } catch (std::exception& e) {
+    } catch (std::exception &e) {
         std::cerr << "recv failed (Error: " << e.what() << ')' << std::endl;
         return false;
     }
@@ -178,52 +180,52 @@ bool ConnectionHandler::sendBytes(const char bytes[], int bytesToWrite) {
     int tmp = 0;
     boost::system::error_code error;
     try {
-        while (!error && bytesToWrite > tmp ) {
+        while (!error && bytesToWrite > tmp) {
             tmp += socket_.write_some(boost::asio::buffer(bytes + tmp, bytesToWrite - tmp), error);
         }
-        if(error)
+        if (error)
             throw boost::system::system_error(error);
-    } catch (std::exception& e) {
+    } catch (std::exception &e) {
         std::cerr << "recv failed (Error: " << e.what() << ')' << std::endl;
         return false;
     }
     return true;
 }
 
-bool ConnectionHandler::getLine(std::string& line) {
+bool ConnectionHandler::getLine(std::string &line) {
     return getFrameAscii(line, '\n');
 }
 
-bool ConnectionHandler::sendLine(std::string& line) {
-  //  char* encodedData= (encdec.encode(line)).data();
+bool ConnectionHandler::sendLine(std::string &line) {
+    //  char* encodedData= (encdec.encode(line)).data();
     return sendFrameAscii(line, '\n');
 }
 
-bool ConnectionHandler::getFrameAscii(std::string& frame, char delimiter) {
+bool ConnectionHandler::getFrameAscii(std::string &frame, char delimiter) {
     char ch;
     // Stop when we encounter the null character.
     // Notice that the null character is not appended to the frame string.
     try {
-        do{
+        do {
             getBytes(&ch, 1);
             frame.append(1, ch);
-        }while (delimiter != ch);
-    } catch (std::exception& e) {
+        } while (delimiter != ch);
+    } catch (std::exception &e) {
         std::cerr << "recv failed (Error: " << e.what() << ')' << std::endl;
         return false;
     }
     return true;
 }
 
-bool ConnectionHandler::sendFrameAscii(const std::string& frame, char delimiter) {
-    bool result=sendBytes(frame.c_str(),frame.length());
-    if(!result) return false;
-    return sendBytes(&delimiter,1);
+bool ConnectionHandler::sendFrameAscii(const std::string &frame, char delimiter) {
+    bool result = sendBytes(frame.c_str(), frame.length());
+    if (!result) return false;
+    return sendBytes(&delimiter, 1);
 }
 
 // Close down the connection properly.
 void ConnectionHandler::close() {
-    try{
+    try {
         socket_.close();
     } catch (...) {
         std::cout << "closing failed: connection already closed" << std::endl;
@@ -231,30 +233,30 @@ void ConnectionHandler::close() {
 }
 
 bool ConnectionHandler::sendPacket(Packet *packet) {
-        this->lastPacketSent = packet->getOpCode();
-        char encodeArray[1<<10];
-        encdec.encode(packet, encodeArray);
-        if (packet->getOpCode()==7) {
-            return sendBytes(encodeArray,((LOGRQ*) packet)->getLength());
-        }
-        else if (packet->getOpCode()==5) {
-        return sendBytes(encodeArray,((ERROR*) packet)->getLength());
-        }
-        else if (packet->getOpCode()==4) {
-        return sendBytes(encodeArray,((ACK*) packet)->getLength());
-     }
-
+    this->lastPacketSent = packet->getOpCode();
+    char encodeArray[1 << 10];
+    encdec.encode(packet, encodeArray);
+    if (packet->getOpCode() == 7) {
+        return sendBytes(encodeArray, ((LOGRQ *) packet)->getLength());
+    } else if (packet->getOpCode() == 5) {
+        return sendBytes(encodeArray, ((ERROR *) packet)->getLength());
+    } else if (packet->getOpCode() == 4) {
+        return sendBytes(encodeArray, ((ACK *) packet)->getLength());
+    } else if (packet->getOpCode() == 10) {
+        return sendBytes(encodeArray, ((DISC *) packet)->getLength());
     }
 
-void ConnectionHandler::run(){
-    while(!terminate) {
+}
+
+void ConnectionHandler::run() {
+    while (!ifShouledTerminate()) {
         char c;
-        short opCode=opCodeSender();
-        Packet* packet = getline(c,opCode);
-        if(packet!= nullptr){
-            Packet* response = process(*packet);
+        short opCode = opCodeSender();
+        Packet *packet = getline(c, opCode);
+        if (packet != nullptr) {
+            Packet *response = process(*packet);
             delete packet;
-            if(response!= nullptr){
+            if (response != nullptr) {
                 sendPacket(response);
                 delete response;
             }
@@ -263,49 +265,52 @@ void ConnectionHandler::run(){
     }
 }
 
-Packet* ConnectionHandler::process(Packet &packet) {
-    if(packet.getOpCode()==4){//ACK
-        ACK& ackPacket=(ACK&)(packet);//TODO:check if the cast works good or we need to use dynamic_cast
-        cout<<"ACK"<<ackPacket.getBlock()<<endl;
+Packet *ConnectionHandler::process(Packet &packet) {
+    if (packet.getOpCode() == 4) {//ACK
+        ACK &ackPacket = (ACK &) (packet);//TODO:check if the cast works good or we need to use dynamic_cast
+        cout << "ACK " << ackPacket.getBlock() << endl;
+        if(lastPacketSent == 10)
+            shouldTerminate = true;
         return nullptr;
-    } else if(packet.getOpCode()==5){//ERROR
-        cout << "Error " << ((ERROR &) packet).getErrorCode() <<endl;
+    } else if (packet.getOpCode() == 5) {//ERROR
+        cout << "Error " << ((ERROR &) packet).getErrorCode() << endl;
     }
     return nullptr;
 }
 
-Packet* ConnectionHandler::getline(char c,short opCode) {
+Packet *ConnectionHandler::getline(char c, short opCode) {
     //TODO:enter first lines in run
     string line;
-    bool found=false;
-    int a=0;
-    if((opCode==4)&&!found) {
-        while (a <= 1) {
+    bool found = false;
+    int a = 0;
+    if ((opCode == 4) && !found) {
+        getBytes(&c, 1);
+        line.append(1, c);
+        getBytes(&c, 1);
+        line.append(1, c);
+        return new ACK(convertor.bytesToShort((char *) line.c_str()));
+    } else if ((opCode == 5) && !found) {
+        for (int i = 0; i < 3; i++) {
             getBytes(&c, 1);
             line.append(1, c);
             getBytes(&c, 1);
             line.append(1, c);
         }
-        return new ACK(convertor.bytesToShort((char*)line.c_str()));
-    }
-    else if((opCode==5)&&!found){
-        for(int i=0;i<3;i++) {
-            getBytes(&c, 1);
-            line.append(1, c);
+        while (c != '\0') {
             getBytes(&c, 1);
             line.append(1, c);
         }
-        while (c!='\0'){
-            getBytes(&c, 1);
-            line.append(1, c);
-        }
-        char* errorCode=(char*) line.substr(0, 2).c_str();
+        char *errorCode = (char *) line.substr(0, 2).c_str();
         return new ERROR(convertor.bytesToShort(errorCode));
     }
     return nullptr;
-    }
+}
 
-short ConnectionHandler::opCodeSender(){
+bool ConnectionHandler::ifShouledTerminate() {
+    return shouldTerminate;
+}
+
+short ConnectionHandler::opCodeSender() {
     char c;
     string line;
     short opCode;
@@ -315,9 +320,9 @@ short ConnectionHandler::opCodeSender(){
         getBytes(&c, 1);
         line.append(1, c);
     }
-    catch (exception exp){
-        cout<<exp.what()<<endl;
+    catch (exception exp) {
+        cout << exp.what() << endl;
     }
-    opCode= (short)(convertor.bytesToShort((char*) line.c_str()));
+    opCode = convertor.bytesToShort((char *) line.c_str());
     return opCode;
 }

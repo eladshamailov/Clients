@@ -12,4 +12,5 @@ class DISC : public Packet
 {
 public:
     DISC();
+    int getLength();
 };

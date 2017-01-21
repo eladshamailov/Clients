@@ -13,7 +13,7 @@ string LOGRQ::getUserName()
 }
 
 int LOGRQ::getLength() {
-    return userName.length();
+    return 2+userName.length()+1;
 }
 
 
