@@ -16,7 +16,8 @@ public:
     void mergeArrays(char *ptr1, int m, char *ptr2, int n,char *connected);
     void encode(Packet *pack, char *answerArr);
 
-    };
+    virtual ~messageEncoderDecoder();
+};
 
 
 #endif //CLIENTS_MESSAGEENCODERDECODER_H

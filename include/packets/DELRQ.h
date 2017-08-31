@@ -2,7 +2,7 @@
 // Created by elad on 1/16/17.
 //
 
-#include "Packet.h"
+#include <packets/Packet.h>
 
 #ifndef CLIENTS_DELRQ_H
 #define CLIENTS_DELRQ_H
@@ -15,4 +15,6 @@ private:
 public:
     DELRQ(string fileName);
     virtual string getFileName();
+
+    virtual ~DELRQ();
 };

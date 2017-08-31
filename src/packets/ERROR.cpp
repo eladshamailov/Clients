@@ -5,7 +5,7 @@
 #include <packets/Packet.h>
 #include <packets/ERROR.h>
 
-ERROR::ERROR(short errorCode) : Packet((short) 5), errorCode(errorCode) {
+ERROR::ERROR(short errorCode) : Packet((short) 5), errorCode(errorCode), errorMassage("") {
     switch (errorCode) {
         case 0: {
             this->errorMassage = "Not defined, see error message (if any).";
@@ -50,10 +50,10 @@ short ERROR::getErrorCode() {
     return errorCode;
 }
 
-string ERROR::getErrorMessage() {
-    return errorMassage;
-}
-
 int ERROR::getLength(){
     return 2+2+errorMassage.length()+1;
+}
+
+ERROR::~ERROR() {
+
 }

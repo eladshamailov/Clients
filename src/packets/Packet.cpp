@@ -11,3 +11,7 @@ short Packet::getOpCode()
 {
     return opCode;
 }
+
+Packet::~Packet() {
+
+}

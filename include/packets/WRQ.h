@@ -2,7 +2,7 @@
 // Created by elad on 1/16/17.
 //
 
-#include "Packet.h"
+#include <packets/Packet.h>
 
 #ifndef CLIENTS_WRQ_H
 #define CLIENTS_WRQ_H
@@ -15,6 +15,8 @@ private:
 public:
     virtual string getFileName();
     WRQ(string fileName);
+
+    virtual ~WRQ();
 
 };
 

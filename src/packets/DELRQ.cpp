@@ -11,3 +11,7 @@ string DELRQ::getFileName()
 {
     return fileName;
 }
+
+DELRQ::~DELRQ() {
+
+}

@@ -16,3 +16,7 @@ short ACK::getBlock()
 int ACK::getLength(){
     return 4;
 }
+
+ACK::~ACK() {
+
+}

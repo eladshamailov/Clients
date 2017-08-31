@@ -16,5 +16,9 @@ int LOGRQ::getLength() {
     return 2+userName.length()+1;
 }
 
+LOGRQ::~LOGRQ() {
+
+}
+
 
 

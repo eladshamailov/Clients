@@ -8,3 +8,7 @@
 DIRQ::DIRQ() : Packet((short)6)
 {
 }
+
+DIRQ::~DIRQ() {
+
+}

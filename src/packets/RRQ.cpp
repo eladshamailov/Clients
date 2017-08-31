@@ -10,3 +10,7 @@ string RRQ::getName()
 }
 
 RRQ::RRQ(string fileName) : Packet((short)1),fileName(fileName){}
+
+RRQ::~RRQ() {
+
+}

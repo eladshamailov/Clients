@@ -7,11 +7,8 @@
 
 BCAST::BCAST(string fileName, char deletedOrAdded) : Packet((short)9),fileName(fileName),deletedOrAdded(deletedOrAdded){}
 
-string BCAST::getFileName() {
-    this->fileName;
-}
 
-char BCAST::isDeletedOrAdded()
-{
-    return deletedOrAdded;
+
+BCAST::~BCAST() {
+
 }

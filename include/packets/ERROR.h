@@ -2,7 +2,7 @@
 // Created by elad on 1/16/17.
 //
 
-#include "Packet.h"
+#include <packets/Packet.h>
 
 #ifndef CLIENTS_ERROR_H
 #define CLIENTS_ERROR_H
@@ -18,9 +18,9 @@ public:
 
     virtual short getErrorCode();
 
-    virtual string getErrorMessage();
-
     int getLength();
+
+    virtual ~ERROR();
 };
 
 #endif //CLIENTS_ERROR_H

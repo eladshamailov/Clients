@@ -23,3 +23,7 @@ short DATA::getPacketSize()
 {
     return packetSize;
 }
+
+DATA::~DATA() {
+
+}

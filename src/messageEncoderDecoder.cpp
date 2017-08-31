@@ -55,3 +55,6 @@ void messageEncoderDecoder::mergeArrays(char *arr1, int length1, char *arr2, int
         *(connected + length1 + i) = *(arr2 + i);
     }
 }
+
+messageEncoderDecoder::~messageEncoderDecoder() {
+}

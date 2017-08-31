@@ -3,7 +3,8 @@
 //
 
 #include <vector>
-#include "Packet.h"
+#include <packets/Packet.h>
+
 
 #ifndef CLIENTS_DATA_H
 #define CLIENTS_DATA_H
@@ -25,5 +26,7 @@ public:
     virtual std::vector <char> getData();
 
     virtual short getPacketSize();
+
+    virtual ~DATA();
 
 };

@@ -17,6 +17,8 @@ public:
     Packet(short opCode);
 
     virtual short getOpCode();
+
+   virtual ~Packet();
 };
 
 #endif //CLIENTS_PACKET_H

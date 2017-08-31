@@ -10,6 +10,8 @@ class bytesAndShortConvertor {
 public:
     short bytesToShort(char* bytesArr);
     void shortToBytes(short num, char* bytesArr);
+
+    virtual ~bytesAndShortConvertor();
 };
 
 

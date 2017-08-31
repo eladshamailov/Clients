@@ -15,3 +15,7 @@ void bytesAndShortConvertor:: shortToBytes(short num, char* bytesArr)
     bytesArr[0] = ((num >> 8) & 0xFF);
     bytesArr[1] = (num & 0xFF);
 }
+
+bytesAndShortConvertor::~bytesAndShortConvertor() {
+
+}

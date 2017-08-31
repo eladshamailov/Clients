@@ -9,4 +9,8 @@ string WRQ::getFileName()
     return fileName;
 }
 
-WRQ::WRQ(string fleName) : Packet((short)2),fileName(fileName){}
+WRQ::WRQ(string fileName) : Packet((short)2),fileName(fileName){}
+
+WRQ::~WRQ() {
+
+}
